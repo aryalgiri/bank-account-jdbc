@@ -7,6 +7,9 @@ public class AccountInfo {
     private long mobileNo;
     private String uniqueIdType;
     private double accountBalance;
+    private String emailID; // Checking purposed
+
+
 
 
     private int ssn;

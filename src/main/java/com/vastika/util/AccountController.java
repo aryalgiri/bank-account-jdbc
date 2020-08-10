@@ -1,4 +1,4 @@
-package com.vastika;
+package com.vastika.util;
 
 
 import com.vastika.dao.UserDao;
