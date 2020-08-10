@@ -1,12 +1,24 @@
 package com.vastika.model;
 
-
-public class AccountHolder {
+public class AccountInfo {
     private int id;
     private String accountHolderName;
     private String address;
     private long mobileNo;
     private String uniqueIdType;
+    private double accountBalance;
+
+    public AccountInfo() {
+    }
+
+    public AccountInfo(int id, String accountHolderName, String address, long mobileNo, String uniqueIdType, int accountBalance) {
+        this.id = id;
+        this.accountHolderName = accountHolderName;
+        this.address = address;
+        this.mobileNo = mobileNo;
+        this.uniqueIdType = uniqueIdType;
+        this.accountBalance = accountBalance;
+    }
 
     public int getId() {
         return id;
@@ -33,6 +45,7 @@ public class AccountHolder {
     }
 
     public long getMobileNo() {
+
         return mobileNo;
     }
 
@@ -47,5 +60,12 @@ public class AccountHolder {
     public void setUniqueIdType(String uniqueIdType) {
         this.uniqueIdType = uniqueIdType;
     }
-}
 
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+}
