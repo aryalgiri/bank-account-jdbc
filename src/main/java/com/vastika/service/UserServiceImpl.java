@@ -8,65 +8,66 @@ import com.vastika.model.AccountBalance;
 import com.vastika.model.AccountHolder;
 
 import com.vastika.model.AccountInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-  UserDao userDao = new UserDaoImpl();
+    UserDao userDao = new UserDaoImpl();
 
-  @Override
-  public void createUserTable() {
-    userDao.createUserTable();
+    @Override
+    public void createUserTable() {
+        userDao.createUserTable();
 
-  }
-
-  @Override
-  public int saveUserInfo(AccountHolder user) {
-    // null object
-    if (user != null) {
-      //check name
-      if (!user.getAccountHolderName().isEmpty() && user.getMobileNo() != 0 && !user.getAddress()
-          .isEmpty()) {
-        return userDao.saveUserInfo(user);
-      }
     }
-    return 0;
 
-  }
+    @Override
+    public int saveUserInfo(AccountHolder user) {
+        // null object
+        if (user != null) {
+            //check name
+            if (!user.getAccountHolderName().isEmpty() && user.getMobileNo() != 0 && !user.getAddress()
+                    .isEmpty()) {
+                return userDao.saveUserInfo(user);
+            }
+        }
+        return 0;
 
-  @Override
-  public int updateUserInfo(AccountHolder user) {
-    return userDao.updateUserInfo(user);
-  }
+    }
 
-  @Override
-  public void deleteUserInfo(int id) {
-userDao.deleteUserInfo(id);
-  }
+    @Override
+    public int updateUserInfo(AccountHolder user) {
+        return userDao.updateUserInfo(user);
+    }
 
-  @Override
-  public AccountHolder getUserById(int id) {
+    @Override
+    public void deleteUserInfo(int id) {
+        userDao.deleteUserInfo(id);
+    }
 
-    return userDao.getUserById(id);
-  }
+    @Override
+    public AccountHolder getUserById(int id) {
 
-  @Override
-  public List<AccountHolder> getAllUserInfo() {
-    return userDao.getAllUserInfo();
-  }
+        return userDao.getUserById(id);
+    }
 
-  @Override
-  public AccountInfo getAccountInfoByUserID(int id){
-    return userDao.getAccountInfoByUserID(id);
-  }
+    @Override
+    public List<AccountHolder> getAllUserInfo() {
+        return userDao.getAllUserInfo();
+    }
 
-  @Override
-  public List<AccountInfo> getAccountsInfo() {
-    return userDao.getAccountsInfo();
-  }
+    @Override
+    public AccountInfo getAccountInfoByUserID(int id) {
+        return userDao.getAccountInfoByUserID(id);
+    }
 
-  public void withdrawFunds(double withdrawAmount) {
+    @Override
+    public List<AccountInfo> getAccountsInfo() {
+        return userDao.getAccountsInfo();
+    }
+
+/*  public void withdrawFunds(double withdrawAmount) {
     AccountBalance balance = new AccountBalance();
 
     if (withdrawAmount <= balance.getAccountBalance()) {
@@ -85,5 +86,5 @@ userDao.deleteUserInfo(id);
 
     System.out.println("deposit successful :)");
 
-  }
+  }*/
 }

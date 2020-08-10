@@ -12,175 +12,176 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
 
-  @Override
-  public void createUserTable() {
-    try (
-        Connection con = DBUtil.getConnection();
-        Statement st = con.createStatement()
-    ) {
-      st.executeUpdate(QueryUtil.ACCOUNT_HOLDER_TABLE_CREATE_SQL);
+    @Override
+    public void createUserTable() {
+        try (
+                Connection con = DBUtil.getConnection();
+                Statement st = con.createStatement()
+        ) {
+            st.executeUpdate(QueryUtil.ACCOUNT_HOLDER_TABLE_CREATE_SQL);
 
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  public int saveUserInfo(AccountHolder user) {
-    int saved = 0;
-
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.INSERT_USER_SQL)
-    ) {
-      ps.setString(1, user.getAccountHolderName());
-      ps.setString(2, user.getAddress());
-      ps.setLong(3, user.getMobileNo());
-      ps.setString(4, user.getUniqueIdType());
-
-      saved = ps.executeUpdate();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    return saved;
-  }
+    @Override
+    public int saveUserInfo(AccountHolder user) {
+        int saved = 0;
 
-  @Override
-  public int updateUserInfo(AccountHolder user) {
-    int updated = 0;
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.UPDATE_USER_SQL)
-    ) {
-      ps.setString(1, user.getAccountHolderName());
-      ps.setString(2, user.getAddress());
-      ps.setLong(3, user.getMobileNo());
-      ps.setString(4, user.getUniqueIdType());
-      ps.setInt(5, user.getId());
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.INSERT_USER_SQL)
+        ) {
+            ps.setString(1, user.getAccountHolderName());
+            ps.setString(2, user.getAddress());
+            ps.setLong(3, user.getMobileNo());
+            ps.setString(4, user.getUniqueIdType());
 
-      updated = ps.executeUpdate();
+            saved = ps.executeUpdate();
 
-    } catch (SQLException e) {
-      System.out.println(e.toString());
-    }
-    return updated;
-  }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-  @Override
-  public void deleteUserInfo(int id) {
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.DELETE_USER_SQL)
-    ) {
-      ps.setInt(1, id);
-      ps.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
+        return saved;
     }
 
-  }
+    @Override
+    public int updateUserInfo(AccountHolder user) {
+        int updated = 0;
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.UPDATE_USER_SQL)
+        ) {
+            ps.setString(1, user.getAccountHolderName());
+            ps.setString(2, user.getAddress());
+            ps.setLong(3, user.getMobileNo());
+            ps.setString(4, user.getUniqueIdType());
+            ps.setInt(5, user.getId());
 
-  @Override
-  public AccountHolder getUserById(int id) {
-    AccountHolder user = new AccountHolder();
+            updated = ps.executeUpdate();
 
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.GET_BY_USER_ID_SQL)
-    ) {
-      ps.setInt(1, id);
-
-      ResultSet rs = ps.executeQuery();
-      if (rs.next()) {
-        user.setId(rs.getInt("id"));
-        user.setAccountHolderName(rs.getString("account_holder_name"));
-        user.setAddress(rs.getString("address"));
-        user.setMobileNo(rs.getLong("mobile_no"));
-        user.setUniqueIdType(rs.getString("unique_id_type"));
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return updated;
     }
-    return user;
 
-  }
+    @Override
+    public void deleteUserInfo(int id) {
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.DELETE_USER_SQL)
+        ) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-  @Override
-  public List<AccountHolder> getAllUserInfo() {
+    }
 
-    List<AccountHolder> userList = new ArrayList<>();
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.LIST_USER_SQL)
-    ) {
-      ResultSet rs = ps.executeQuery();
-
-      while (rs.next()) {
+    @Override
+    public AccountHolder getUserById(int id) {
         AccountHolder user = new AccountHolder();
-        user.setId(rs.getInt("id"));
-        user.setAccountHolderName(rs.getString("account_holder_name"));
-        user.setAccountHolderName(rs.getString("address"));
-        user.setMobileNo(rs.getLong("mobile_no"));
-        user.setUniqueIdType(rs.getString("unique_id_type"));
 
-        userList.add(user);
-      }
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.GET_BY_USER_ID_SQL)
+        ) {
+            ps.setInt(1, id);
 
-    } catch (SQLException e) {
-      e.printStackTrace();
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user.setId(rs.getInt("id"));
+                user.setAccountHolderName(rs.getString("account_holder_name"));
+                user.setAddress(rs.getString("address"));
+                user.setMobileNo(rs.getLong("mobile_no"));
+                user.setUniqueIdType(rs.getString("unique_id_type"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+
     }
-    return userList;
-  }
 
-  @Override
-  public AccountInfo getAccountInfoByUserID(int id) {
-    AccountInfo accountInfo = new AccountInfo();
+    @Override
+    public List<AccountHolder> getAllUserInfo() {
 
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.GET_ACCOUNT_INFO_BY_USER_ID_SQL)
-    ) {
-      ps.setInt(1, id);
+        List<AccountHolder> userList = new ArrayList<>();
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.LIST_USER_SQL)
+        ) {
+            ResultSet rs = ps.executeQuery();
 
-      ResultSet rs = ps.executeQuery();
-      if (rs.next()) {
-        accountInfo.setId(rs.getInt("id"));
-        accountInfo.setAccountHolderName(rs.getString("account_holder_name"));
-        accountInfo.setAddress(rs.getString("address"));
-        accountInfo.setMobileNo(rs.getLong("mobile_no"));
-        accountInfo.setAccountBalance(rs.getInt("account_balance"));
-      }
+            while (rs.next()) {
+                AccountHolder user = new AccountHolder();
+                user.setId(rs.getInt("id"));
+                user.setAccountHolderName(rs.getString("account_holder_name"));
+                user.setAccountHolderName(rs.getString("address"));
+                user.setMobileNo(rs.getLong("mobile_no"));
+                user.setUniqueIdType(rs.getString("unique_id_type"));
 
-    } catch (SQLException e) {
-      e.printStackTrace();
+                userList.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
-    return accountInfo;
-  }
 
-  @Override
-  public List<AccountInfo> getAccountsInfo() {
-    List<AccountInfo> accountInfoList=new ArrayList<>();
-
-    try (
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = con.prepareStatement(QueryUtil.LIST_ACCOUNTS_INFO_SQL)
-    ) {
-      ResultSet rs = ps.executeQuery();
-      if (rs.next()) {
+    @Override
+    public AccountInfo getAccountInfoByUserID(int id) {
         AccountInfo accountInfo = new AccountInfo();
-        accountInfo.setId(rs.getInt("id"));
-        accountInfo.setAccountHolderName(rs.getString("account_holder_name"));
-        accountInfo.setAddress(rs.getString("address"));
-        accountInfo.setMobileNo(rs.getLong("mobile_no"));
-        accountInfo.setAccountBalance(rs.getInt("account_balance"));
-      }
 
-    } catch (SQLException e) {
-      e.printStackTrace();
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.GET_ACCOUNT_INFO_BY_USER_ID_SQL)
+        ) {
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                accountInfo.setId(rs.getInt("id"));
+                accountInfo.setAccountHolderName(rs.getString("account_holder_name"));
+                accountInfo.setAddress(rs.getString("address"));
+                accountInfo.setMobileNo(rs.getLong("mobile_no"));
+                accountInfo.setAccountBalance(rs.getInt("account_balance"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accountInfo;
     }
-    return accountInfoList;
-  }
+
+    @Override
+    public List<AccountInfo> getAccountsInfo() {
+        List<AccountInfo> accountInfoList = new ArrayList<>();
+
+        try (
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.LIST_ACCOUNTS_INFO_SQL)
+        ) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                AccountInfo accountInfo = new AccountInfo();
+                accountInfo.setId(rs.getInt("id"));
+                accountInfo.setAccountHolderName(rs.getString("account_holder_name"));
+                accountInfo.setAddress(rs.getString("address"));
+                accountInfo.setMobileNo(rs.getLong("mobile_no"));
+                accountInfo.setAccountBalance(rs.getInt("account_balance"));
+                accountInfoList.add(accountInfo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accountInfoList;
+    }
 }

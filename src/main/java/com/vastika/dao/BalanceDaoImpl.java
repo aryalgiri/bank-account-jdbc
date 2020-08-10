@@ -16,8 +16,8 @@ public class BalanceDaoImpl implements BalanceDao {
     @Override
     public void createBalanceTable() {
         try (
-            Connection con = DBUtil.getConnection();
-            Statement st = con.createStatement()
+                Connection con = DBUtil.getConnection();
+                Statement st = con.createStatement()
         ) {
             st.executeUpdate(QueryUtil.ACCOUNT_BALANCE_TABLE_CREATE_SQL);
             System.out.println("account balance table created!!");
@@ -33,8 +33,8 @@ public class BalanceDaoImpl implements BalanceDao {
         int balanceSaved = 0;
 
         try (
-            Connection con = DBUtil.getConnection();
-            PreparedStatement ps = con.prepareStatement(QueryUtil.INSERT_BALANCE_SQL)
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(QueryUtil.INSERT_BALANCE_SQL)
         ) {
             ps.setDouble(1, balance.getDepositAmount());
             ps.setDouble(2, balance.getWithdrawAmount());
@@ -93,23 +93,23 @@ public class BalanceDaoImpl implements BalanceDao {
         return balanceUpdated;
     }
 
-/*    @Override
-    public void deleteBalanceInfo(int accountHolderInfoId) {
-        try (
-                Connection con = DBUtil.getConnection();
-                PreparedStatement ps = con.prepareStatement(QueryUtil.DELETE_BALANCE_SQL)
-        ) {
+    /*    @Override
+        public void deleteBalanceInfo(int accountHolderInfoId) {
+            try (
+                    Connection con = DBUtil.getConnection();
+                    PreparedStatement ps = con.prepareStatement(QueryUtil.DELETE_BALANCE_SQL)
+            ) {
 
-            ps.setInt(1, accountHolderInfoId);
+                ps.setInt(1, accountHolderInfoId);
 
-            ps.executeUpdate();
+                ps.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
-
-    }
-*/
+    */
     @Override
     public AccountBalance getBalanceByAccountHolderInfoID(int accountHolderInfoId) {
         AccountBalance balance = new AccountBalance();
@@ -119,9 +119,9 @@ public class BalanceDaoImpl implements BalanceDao {
                 PreparedStatement ps = con.prepareStatement(QueryUtil.GET_BY_USER_INFO_ID_SQL)
         ) {
             ps.setInt(1, accountHolderInfoId);
-            ResultSet rs=ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 balance.setAccountHolderInfoId(rs.getInt("account_holder_info_id"));
                 balance.setDepositAmount(rs.getDouble("deposit_amount"));
                 balance.setWithdrawAmount(rs.getDouble("withdraw_amount"));

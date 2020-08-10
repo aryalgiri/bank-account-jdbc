@@ -7,10 +7,6 @@ public class AccountInfo {
     private long mobileNo;
     private String uniqueIdType;
     private double accountBalance;
-    private String emailID; // Checking purposed
-
-
-
 
     private int ssn;
 
@@ -21,7 +17,6 @@ public class AccountInfo {
     public void setSsn(int ssn) {
         this.ssn = ssn;
     }
-
 
 
     public AccountInfo() {

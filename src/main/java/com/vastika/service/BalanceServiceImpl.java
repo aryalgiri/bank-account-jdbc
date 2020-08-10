@@ -6,19 +6,20 @@ import com.vastika.model.AccountBalance;
 
 import java.util.List;
 
-public class BalanceServiceImpl implements BalanceService{
+public class BalanceServiceImpl implements BalanceService {
     BalanceDao balanceDao = new BalanceDaoImpl();
+
     @Override
     public void createBalanceTable() {
-    balanceDao.createBalanceTable();
+        balanceDao.createBalanceTable();
     }
 
-/*    @Override
-    public int saveBalanceInfo(int balance) {
-        balanceDao.saveBalanceInfo(balance);
-        return balance;
-    }
-*/
+    /*    @Override
+        public int saveBalanceInfo(int balance) {
+            balanceDao.saveBalanceInfo(balance);
+            return balance;
+        }
+    */
     @Override
     public int saveOrUpdateBalanceInfo(AccountBalance balance) {
         int bal = 0;
@@ -30,13 +31,13 @@ public class BalanceServiceImpl implements BalanceService{
         //withdraw failed = 4;
 
         AccountBalance balance1 = balanceDao.getBalanceByAccountHolderInfoID(balance.getAccountHolderInfoId());
-        if(balance1 != null){
+        if (balance1 != null) {
             double intitalBalance = balance1.getAccountBalance();
-            if(balance.getDepositAmount() > 0 && balance.getWithdrawAmount() == 0){
+            if (balance.getDepositAmount() > 0 && balance.getWithdrawAmount() == 0) {
                 intitalBalance = intitalBalance + balance.getDepositAmount();
                 bal = 2;
-            } else if(balance.getWithdrawAmount() > 0 && balance.getDepositAmount() ==0){
-                if(balance.getWithdrawAmount() > intitalBalance){
+            } else if (balance.getWithdrawAmount() > 0 && balance.getDepositAmount() == 0) {
+                if (balance.getWithdrawAmount() > intitalBalance) {
                     return 4;
                 } else {
                     intitalBalance = intitalBalance - balance.getWithdrawAmount();
@@ -48,9 +49,9 @@ public class BalanceServiceImpl implements BalanceService{
             balance.setDepositAmount(balance.getDepositAmount());
             balance.setWithdrawAmount(balance.getWithdrawAmount());
             balanceDao.updateBalanceInfo(balance);
-        }else {
+        } else {
             balance.setAccountBalance(balance.getDepositAmount());
-            bal =  balanceDao.saveBalanceInfo(balance);
+            bal = balanceDao.saveBalanceInfo(balance);
         }
         return bal;
     }
@@ -72,6 +73,6 @@ public class BalanceServiceImpl implements BalanceService{
 
     @Override
     public List<AccountBalance> getAllBalanceInfo() {
-        return null;
+        return balanceDao.getAllBalanceInfo();
     }
 }

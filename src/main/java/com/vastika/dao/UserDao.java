@@ -7,22 +7,20 @@ import java.util.List;
 
 public interface UserDao {
 
-  void createUserTable();
+    void createUserTable();
 
-  int saveUserInfo(AccountHolder user);
+    int saveUserInfo(AccountHolder user);
 
+    int updateUserInfo(AccountHolder user);
 
+    void deleteUserInfo(int id);
 
-  int updateUserInfo(AccountHolder user);
+    AccountHolder getUserById(int id); // returns a particular account holder details from account_holder table
 
-  void deleteUserInfo(int id);
+    List<AccountHolder> getAllUserInfo(); // returns all account holders from account_holder_table
 
-  AccountHolder getUserById(int id); // returns a particular account holder details from account_holder table
+    AccountInfo getAccountInfoByUserID(int id); // returns a particular account details from account_holder table and account_balance table
 
-  List<AccountHolder> getAllUserInfo(); // returns all account holders from account_holder_table
-
-  AccountInfo getAccountInfoByUserID(int id); // returns a particular account details from account_holder table and account_balance table
-
-  List<AccountInfo> getAccountsInfo(); // returns all account details from from account_holder table and account_balance table
+    List<AccountInfo> getAccountsInfo(); // returns all account details from from account_holder table and account_balance table
 
 }

@@ -6,14 +6,11 @@ import java.util.List;
 
 public interface BalanceService {
 
-  void createBalanceTable();
+    void createBalanceTable();
 
-  int saveOrUpdateBalanceInfo(AccountBalance balance);
-    /* int saveBalanceInfo(int balance);
-    int updateBalanceInfo(AccountBalance balance);
-    void deleteBalanceInfo(int accountHolderInfoId);*/
+    int saveOrUpdateBalanceInfo(AccountBalance balance);
 
-  AccountBalance getBalanceByAccountHolderInfoID(int accountHolderInfoId);
+    AccountBalance getBalanceByAccountHolderInfoID(int accountHolderInfoId);
 
-  List<AccountBalance> getAllBalanceInfo();
+    List<AccountBalance> getAllBalanceInfo();
 }

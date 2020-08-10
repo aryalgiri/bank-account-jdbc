@@ -9,11 +9,9 @@ public interface BalanceDao {
     void createBalanceTable();
 
     int saveBalanceInfo(int balance);
-/*
-* Hello Giri sir! wher is my deposited money?
-* */
 
     int updateBalanceInfo(AccountBalance balance);
+
     int saveBalanceInfo(AccountBalance balance);
 
     /*    int updateBalanceInfo(AccountBalance balance);
